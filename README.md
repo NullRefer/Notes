@@ -1,2 +1,3 @@
 # Notes
-Notes for Me
+
+Notes and custom profile
