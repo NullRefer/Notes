@@ -1,6 +1,17 @@
 # C# 多线程、并行和异步编程
 
-## 1.进程
+- [C# 多线程、并行和异步编程](#c-多线程并行和异步编程)
+  - [1. 进程](#1-进程)
+  - [2. 线程](#2-线程)
+  - [3. 使用Thread创建线程](#3-使用thread创建线程)
+  - [4. 多线程访问公共资源问题](#4-多线程访问公共资源问题)
+  - [5. 线程池](#5-线程池)
+  - [6. 使用任务并行库进行并行编程](#6-使用任务并行库进行并行编程)
+  - [7. 异步编程Async](#7-异步编程async)
+
+## 1. 进程
+
+---
 
 进程是一个运行程序。进程是一个操作系统级别的概念，用来描述一组资源（比如外部代码库和主线程）和程序运行必须的内存分配。对于每一个加载到内存的*.exe，在它的生命周期中操作系统会为之创建一个单独且隔离的进程。
 
@@ -8,9 +19,9 @@
 
 每一个**Windows**进程都有一个唯一的进程标识符，即**PID**，当需要时，它们能被操作系统加载和卸载。
 
----
+## 2. 线程
 
-## 2.线程
+---
 
 线程是进程中的基本执行单元。
 
@@ -23,9 +34,9 @@
 
 单CPU的计算机并没有能力在同一时间运行多个线程。准确地说，在一个单位时间（即一个时间片）内，单CPU只能根据线程优先级执行一个线程。当一个线程的时间片用完的时候，它会被挂起，以便执行其他线程。对于线程来说，它们需要在挂起前记住发生了什么，它们把这些情况写到线程本地存储中（Thread Local Storage，TLS），并且它们还要获得一个独立的调用栈（call stack）。
 
----
+## 3. 使用Thread创建线程
 
-## 3.使用Thread创建线程
+---
 
 ``` C#
 static void Main(string[] args){
@@ -43,12 +54,12 @@ private void Print(){
 }
 ```
 
->使用Thread创建的线程优先级皆为Normal,如果想要在启动线程时把数据传递给任务，则在new Thread中应该使用new ParameterizedThreadStart委托创建线程，同时t.Start(object)把object传递给Print
->使用Thread创建的线程默认为后台线程，即IsBackground = True，这将使得，当前台线程结束后，即使后台线程尚未完成，程序也将关闭。故对于可不必须做完的任务，都将其IsBackground设为True，而对于一些重要任务，可以将其设为前台线程，即IsBackground = False
+>使用 `Thread` 创建的线程优先级皆为 `Normal`,如果想要在启动线程时把数据传递给任务，则在 `new Thread` 中应该使用 `new ParameterizedThreadStart` 委托创建线程，同时 `t.Start(object)` 把 `object` 传递给 `Print`.
+>使用 `Thread` 创建的线程默认为后台线程，即 `IsBackground = True`，这将使得，当前台线程结束后，即使后台线程尚未完成，程序也将关闭。故对于可不必须做完的任务，都将其 `IsBackground` 设为 `True`，而对于一些重要任务，可以将其设为前台线程，即 `IsBackground = False`
+
+## 4. 多线程访问公共资源问题
 
 ---
-
-## 4.多线程访问公共资源问题
 
 对于多线程访问公共资源时，可能会发生资源的争抢，因此需要用lock将目标资源锁定，防止混乱。
 
@@ -61,9 +72,9 @@ lock(locker){
 }
 ```
 
----
+## 5. 线程池
 
-## 5.线程池
+---
 
 线程池的好处：
 
@@ -72,9 +83,9 @@ lock(locker){
 
 然而线程池中的线程始终是后台线程，且它的优先级是默认的normal
 
----
+## [6. 使用任务并行库进行并行编程](https://docs.microsoft.com/zh-cn/dotnet/standard/parallel-programming/task-based-asynchronous-programming)
 
-## [6.使用任务并行库进行并行编程](https://docs.microsoft.com/zh-cn/dotnet/standard/parallel-programming/task-based-asynchronous-programming)
+---
 
 任务并行库(TPL)以“任务”的概念为基础，后者表示异步操作。在某些方面，任务类似于线程或者`ThreadPool`工作项，但是抽象级别更高。术语“任务并行”是指一个或多个独立的任务同时运行。任务提供两个主要好处。
 
@@ -86,11 +97,11 @@ lock(locker){
 
     - 任务和围绕它们生成的框架提供了一组丰富的API，这些API支持等待、取消、继续、可靠的异常处理、详细状态、自定义计划等功能
 
-出于这两个原因，在`.NET Framework`中,TPL是用于编写多线程、异步和并行代码的首选API。
+出于这两个原因，在 `.NET Framework` 中, `TPL` 是用于编写多线程、异步和并行代码的首选 API。
 
 1. 数据并行
 
-- **Parallel**类支持两个主要的静态方法,     Parallel.For和Parallel.ForEach方法,这两个方法对数组或集合中的数据进行迭代.
+   **Parallel**类支持两个主要的静态方法,     Parallel.For和Parallel.ForEach方法,这两个方法对数组或集合中的数据进行迭代.
 
     ``` C#
     List<int> list = new List<int>();
@@ -107,9 +118,9 @@ lock(locker){
     });
     ```
 
-1. 任务并行
+2. 任务并行
 
-- 隐式创建和运行任务，**Parallel.Invoke**方法触发多个异步任务
+    隐式创建和运行任务，**`Parallel.Invoke`** 方法触发多个异步任务
 
     ``` C#
     // Parallel.Invoke(params Action[] actions)
@@ -123,9 +134,11 @@ lock(locker){
     );
     ```
 
-- 显示创建和运行任务
-  - 不返回值的任务由`System.Threading.Tasks.Task`类来表示。返回值的任务由`System.Threading.Tasks.Task<TResult>`类表示，该类从`Task`继承。任务对象处理基础结构详细信息，并提供可在任务的整个生存期从调用线程访问的方法和属性。例如，可以随时访问任务的`Status`属性，以确定它是一开始运行、已完成运行、已取消还是引发了异常。状态由`TaskStatus`枚举表示。
-  - 在创建任务时，你赋予它一个用户委托，该委托封装该任务将执行的代码。该委托可以表示为命名的委托、匿名方法或lambda表达式。lambda表达式可以包含对命名方法的调用，如下面的示例所示。请注意，该实例包含对`Task.Wait`方法的调用，以确保任务在控制台模式应用程序结束之前完成执行。
+    显示创建和运行任务
+
+- 不返回值的任务由`System.Threading.Tasks.Task`类来表示。返回值的任务由`System.Threading.Tasks.Task<TResult>`类表示，该类从`Task`继承。任务对象处理基础结构详细信息，并提供可在任务的整个生存期从调用线程访问的方法和属性。例如，可以随时访问任务的`Status`属性，以确定它是一开始运行、已完成运行、已取消还是引发了异常。状态由`TaskStatus`枚举表示。
+
+- 在创建任务时，你赋予它一个用户委托，该委托封装该任务将执行的代码。该委托可以表示为命名的委托、匿名方法或lambda表达式。lambda表达式可以包含对命名方法的调用，如下面的示例所示。请注意，该实例包含对`Task.Wait`方法的调用，以确保任务在控制台模式应用程序结束之前完成执行。
 
     ``` C#
     static void Main(){
@@ -181,9 +194,9 @@ lock(locker){
     Console.WriteLine(sum);
     ```
 
-> `Task.Factory.StartNew`极其强大，很多异步运行的任务都可以使用该方法进行，参考例程详见[MSDN官方介绍：基于任务的异步编程](https://docs.microsoft.com/zh-cn/dotnet/standard/parallel-programming/task-based-asynchronous-programming)
+> `Task.Factory.StartNew`极其强大，很多异步运行的任务都可以使用该方法进行，参考例程详见 [MSDN官方介绍：基于任务的异步编程](https://docs.microsoft.com/zh-cn/dotnet/standard/parallel-programming/task-based-asynchronous-programming)
 
-## [7.异步编程Async](https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/concepts/async/)
+## [7. 异步编程Async](https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/concepts/async/)
 
 C# 的`async`关键字用来指定某个方法,`lambda`表达式或者匿名方法自动以异步的方式来调用,CLR会创建新的执行线程来处理任务.在调用`asyn`方法时,`await`关键字会自动暂停当前线程中任何其他活动,直到任务完成,离开调用线程,并继续未完成的任务.
 >这个用法比较复杂，建议先熟练掌握`Task`类的用法。
