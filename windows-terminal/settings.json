@@ -12,6 +12,14 @@
 
   // You can add more global application settings here.
   // To learn more about global settings, visit https://aka.ms/terminal-global-settings
+  // launch size
+  "initialCols": 100,
+  "initialRows": 25,
+  // launch position
+  "initialPosition": "300,200",
+  // center on launch
+  "centerOnLaunch": true,
+
 
   "alwaysShowTabs": true,
 
@@ -48,21 +56,22 @@
         "name": "Windows PowerShell",
         "tabTitle": "PowerShell",
         "commandline": "powershell.exe",
-        "backgroundImage": "C:\\Users\\%your username%\\Pictures\\Saved Pictures\\win10-dark.jpg",
-        "backgroundImageStretchMode": "uniformtofill",
+        "backgroundImage": "C:\\Users\\BJTU-811F\\Pictures\\Saved Pictures\\win10-dark.jpg",
+        "backgroundImageStretchMode": "uniformToFill",
         "backgroundImageOpacity": 0.7,
         "hidden": false
       },
       {
         "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-        "name": "Ubuntu 20.04",
+        "name": "Ubuntu",
         "source": "Windows.Terminal.Wsl",
         "tabTitle": "Ubuntu",
-        "icon": "C:\\Users\\%your username%\\Pictures\\Saved Pictures\\ubuntu-logo32.png",
-        "backgroundImage": "C:\\Users\\%your username%\\Pictures\\Saved Pictures\\ubuntu-logo32.png",
+        "icon": "C:\\Users\\BJTU-811F\\Pictures\\Saved Pictures\\ubuntu-logo32.png",
+        "backgroundImage": "C:\\Users\\BJTU-811F\\Pictures\\Saved Pictures\\ubuntu-logo32.png",
         "backgroundImageStretchMode": "none",
         "backgroundImageOpacity": 0.3,
-        "hidden": false
+        "hidden": false,
+        "startingDirectory": "\\\\wsl$\\Ubuntu\\"
       },
       {
         // Make changes here to the cmd.exe profile.
