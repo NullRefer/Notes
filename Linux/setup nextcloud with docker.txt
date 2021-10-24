@@ -1,0 +1,4 @@
+1. setup mysql
+docker run -d --restart=always --name nextcloud-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysqlroot -e MYSQL_DATABASE=nextcloud -e MYSQL_USER:nextcloud -e MYSQL_PASSWORD=nextcloud mariadb
+2. setup nextcloud
+docker run -d --restart=always --name nextcloud -p 8001:80 -v nextcloud:/var/www/html --link nextcloud-db:nextcloud-db nextcloud
