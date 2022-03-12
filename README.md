@@ -1,3 +1,3 @@
 # Notes
 
-Notes and custom profile
+Notes and custom profiles
