@@ -1,7 +1,3 @@
 # Notes
 
-Notes and custom profile
-
-update file
-
-update at main
+Useful notes when use PC
